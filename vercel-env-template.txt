@@ -1,0 +1,23 @@
+# Vercel Environment Variables Template
+# Copy these to your Vercel project settings → Environment Variables
+
+# Database Configuration (Required)
+# Use Vercel Postgres or external PostgreSQL
+DATABASE_URL="postgresql://username:password@host:5432/database_name"
+
+# NextAuth Configuration (Required)
+NEXTAUTH_SECRET="your-secure-nextauth-secret-minimum-32-characters"
+NEXTAUTH_URL="https://your-app-name.vercel.app"
+
+# Upload Configuration (Required)
+UPLOAD_SECRET="your-secure-upload-secret"
+
+# Google Calendar Integration (Optional)
+GOOGLE_CAL_ID="primary"
+
+# N8N Webhook URLs (Optional)
+N8N_WEBHOOK_BOOKING="https://your-n8n-server.com/webhook/bookings/create"
+N8N_WEBHOOK_AVAIL="https://your-n8n-server.com/webhook/availability"
+
+# Node Environment (Automatically set by Vercel)
+NODE_ENV="production"

@@ -1,0 +1,56 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../lib/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Customer {
+  id        String   @id @default(cuid())
+  fullName  String
+  phone     String   @unique
+  email     String?
+  instagram String?
+  createdAt DateTime @default(now())
+  bookings  Booking[]
+
+  @@map("customers")
+}
+
+model Service {
+  id          String   @id @default(cuid())
+  name        String
+  category    String
+  durationMin Int
+  basePrice   Int // Price in cents (CHF * 100)
+  isActive    Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  bookings    Booking[]
+
+  @@map("services")
+}
+
+model Booking {
+  id           String   @id @default(cuid())
+  customerId   String
+  serviceId    String
+  length       String
+  designText   String?
+  designImages Json?    // Array of image URLs/metadata
+  startTime    DateTime
+  endTime      DateTime
+  status       String   @default("pending") // pending, confirmed, cancelled
+  source       String   @default("website") // website, instagram, phone
+  createdAt    DateTime @default(now())
+  eventId      String?  // Google Calendar event id
+  Customer     Customer @relation(fields: [customerId], references: [id])
+  Service      Service  @relation(fields: [serviceId], references: [id])
+
+  @@map("bookings")
+}
